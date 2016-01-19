@@ -1,0 +1,22 @@
+{
+  "name": "gig-input-youtube",
+  "version": "0.0.1",
+  "homepage": "https://github.com/gigigo-html5/gig-input-youtube",
+  "authors": [
+    "Pedro Peña <pedro.jose@gigigo.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~1.2.0",
+    "font-roboto": "~0.0.2",
+    "google-youtube": "GoogleWebComponents/google-youtube#~1.1.3",
+    "gig-input": "~0.0.14"
+  }
+}
