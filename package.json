@@ -1,6 +1,6 @@
 {
   "name": "gig-input-youtube",
-  "version": "0.0.11",
+  "version": "0.0.2",
   "description": "Webcompontent to magage input with youtube video",
   "main": "gruntfile.js",
   "scripts": {
