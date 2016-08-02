@@ -4,14 +4,14 @@
 
 <dom-module id="gig-input-youtube">
 
-    <style>
-        google-youtube {
-            margin-top: 10px;
-        }
-    </style>
+  <style>
+    google-youtube {
+      margin-top: 10px;
+    }
+  </style>
 
-    <template>
-        <gig-input id="input"
+  <template>
+    <gig-input id="input"
                autocomplete$="[[autocomplete]]"
                required$="[[required]]"
                placeholder$="[[placeholder]]"
@@ -27,73 +27,109 @@
                type="{{typeFormat}}"
                value="[[value]]"></gig-input>
 
-       <template is="dom-if" if="{{submitVideo}}">
-           <google-youtube
-              video-id="{{videoId}}"
-              height="270px"
-              width="480px"
-              rel="0"
-              start="5"
-              id="youtube"
-              autoplay="1">
-           </google-youtube>
-        </template>
+    <template is="dom-if" if="{{submitVideo}}">
+      <google-youtube
+        video-id="{{videoId}}"
+        height="270px"
+        width="480px"
+        rel="0"
+        start="5"
+        id="youtube"
+        autoplay="1">
+      </google-youtube>
     </template>
+  </template>
 
+  <script>
+    (function() {
+      var self;
+      Polymer({
+        is: 'gig-input-youtube',
+        listeners: {
+          'google-youtube-error': 'errorVideo'
+        },
+        ready: function() {
+          this.$.input.addEventListener('blur', this.blurEvent.bind(this));
+        },
+        blurEvent: function(e) {
+          this.submitVideo = false;
+          this.getVideoId(e.target.value);
+        },
+        getVideoId: function(value) {
+          var url = value.split('=')[0]
+          this.videoId = value.split('=')[1];
+          this.$.input.errorMessage = null;
 
-
-    <script>
-        (function() {
-
-            var self;
-
-            Polymer({
-                is: 'gig-input-youtube',
-                listeners: {
-                    'google-youtube-error' : 'errorVideo'
-                },
-                ready: function() {
-                    this.$.input.addEventListener('blur', this.blurEvent.bind(this));
-                },
-                blurEvent: function(e) {
-                    this.submitVideo = false;
-                    this.getVideoId(e.target.value);
-                },
-                getVideoId: function(value) {
-                    var url = value.split('=')[0]
-                    this.videoId = value.split('=')[1];
-                    this.$.input.errorMessage = null;
-
-                    if (this.videoId && url === 'https://www.youtube.com/watch?v') {
-                        this.submitVideo = true;
-                    } else {
-                        this.$.input.invalid = true;
-                        this.$.input.errorMessage =  this.errorMessage;
-                    }
-                },
-                errorVideo: function(e) {
-                    if (e.detail.data) {
-                        this.submitVideo = false;
-                        this.$.input.invalid = true;
-                        this.$.input.errorMessage =  this.errorMessage;
-                    }
-                },
-                properties: {
-                    videoId: {
-                        type: String,
-                        notify: true
-                    },
-                    submitVideo: {
-                        type: Boolean,
-                        notify: true
-                    },
-                    errorMessage: {
-                        type: String,
-                        value: 'Invalid Youtube video'
-                    }
-                }
-            })
-        })();
-    </script>
+          if (this.videoId && url === 'https://www.youtube.com/watch?v') {
+            this.submitVideo = true;
+          } else {
+            this.$.input.invalid = true;
+            this.$.input.errorMessage = this.errorMessage;
+          }
+        },
+        errorVideo: function(e) {
+          if (e.detail.data) {
+            this.submitVideo = false;
+            this.$.input.invalid = true;
+            this.$.input.errorMessage = this.errorMessage;
+          }
+        },
+        properties: {
+          videoId: {
+            type: String,
+            notify: true
+          },
+          autocomplete: {
+            type: Boolean,
+            value: false
+          },
+          name: {
+            type: String
+          },
+          required: {
+            type: Boolean
+          },
+          readonly: {
+            type: Boolean
+          },
+          typeFormat: {
+            type: String
+          },
+          value: {
+            type: String
+          },
+          minlength: {
+            type: Number
+          },
+          maxlength: {
+            type: Number
+          },
+          min: {
+            type: Number
+          },
+          max: {
+            type: Number
+          },
+          disabled: {
+            type: Boolean
+          },
+          step: {
+            type: Number
+          },
+          placeholder: {
+            type: String
+          },
+          submitVideo: {
+            type: Boolean,
+            notify: true
+          },
+          errorMessage: {
+            type: String,
+            value: 'Invalid Youtube video'
+          }
+        }
+      })
+    })();
+  </script>
 
 </dom-module>
