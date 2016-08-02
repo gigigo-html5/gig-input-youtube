@@ -1,6 +1,6 @@
 {
   "name": "gig-input-youtube",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Webcompontent to magage input with youtube video",
   "main": "gulpfile.js",
   "scripts": {
